@@ -1,0 +1,1 @@
+docker run -d --mount type=bind,source=$(pwd),target=/app -p 3333:3000 node:18-alpine sleep infinity   
