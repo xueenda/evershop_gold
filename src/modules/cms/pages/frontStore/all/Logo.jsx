@@ -11,7 +11,9 @@ export default function Logo({
     <div className="logo">
       {src && (
         <a href="/" className="logo-icon">
-          <img src={src} alt={alt} width={width} height={height} />
+          <span className="bmo-logo-font">BMO </span>
+          <img src={src} alt={alt} width={width} height={height} style={{display: "inline-block"}}/>
+          <span className="bmo-logo-font"> Precious Metals</span>
         </a>
       )}
       {!src && (
@@ -56,10 +58,10 @@ Logo.propTypes = {
 Logo.defaultProps = {
   themeConfig: {
     logo: {
-      src: '',
-      alt: 'Evershop',
-      width: '128',
-      height: '146'
+      alt: "BMO Capital Markets",
+      src: "/images/bmo_logo.jpg",
+      width: 40,
+      height: 40
     }
   }
 };
@@ -69,15 +71,3 @@ export const layout = {
   sortOrder: 1
 };
 
-export const query = `
-  query query {
-    themeConfig {
-      logo {
-        src
-        alt
-        width
-        height
-      }
-    }
-  }
-`;

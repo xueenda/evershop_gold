@@ -6,6 +6,7 @@ import { Price } from '@components/frontStore/catalog/product/list/item/Price';
 import Area from '@components/common/Area';
 import { get } from '@evershop/evershop/src/lib/util/get';
 import { _ } from '@evershop/evershop/src/lib/locale/translate';
+import './List.scss';
 
 export default function ProductList({ products = [], countPerRow = 3 }) {
   if (products.length === 0) {
@@ -36,7 +37,7 @@ export default function ProductList({ products = [], countPerRow = 3 }) {
       {products.map((p) => (
         <Area
           id="productListingItem"
-          className="listing-tem"
+          className="listing-item"
           product={p}
           key={p.productId}
           coreComponents={[

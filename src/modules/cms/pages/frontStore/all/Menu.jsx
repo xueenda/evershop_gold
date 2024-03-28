@@ -30,10 +30,10 @@ Menu.propTypes = {
   }).isRequired
 };
 
-export const layout = {
-  areaId: 'header',
-  sortOrder: 5
-};
+// export const layout = {
+//   areaId: 'header',
+//   sortOrder: 5
+// };
 
 export const query = `
   query {

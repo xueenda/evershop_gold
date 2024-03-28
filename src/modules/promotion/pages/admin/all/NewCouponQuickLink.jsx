@@ -11,10 +11,10 @@ NewProductQuickLink.propTypes = {
   couponNew: PropTypes.string.isRequired
 };
 
-export const layout = {
-  areaId: 'quickLinks',
-  sortOrder: 30
-};
+// export const layout = {
+//   areaId: 'quickLinks',
+//   sortOrder: 30
+// };
 
 export const query = `
   query Query {

@@ -29,5 +29,5 @@ module.exports = () => {
     precision: 2
   };
   config.util.setModuleDefaults('pricing', pricingConfig);
-  // Getting config value like this: config.get('catalog.product.image.thumbnail.width');
+  // Getting config value like this: ;
 };

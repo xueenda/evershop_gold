@@ -46,7 +46,7 @@ module.exports = {
       base: '.875rem'
     },
     colors: {
-      primary: '#008060',
+      primary: '#0078c1',
       secondary: '#111213',
       surface: '#111213',
       onSurface: '#111213',

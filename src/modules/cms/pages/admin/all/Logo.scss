@@ -1,12 +1,32 @@
+// .logo {
+//   display: flex;
+//   a {
+//     align-self: center;
+//     color: var(--primary);
+//     padding: 3px;
+//     svg {
+//       width: 4rem;
+//       height: 3rem;
+//     }
+//   }
+// }
+
+
 .logo {
   display: flex;
-  a {
-    align-self: center;
-    color: var(--primary);
-    padding: 3px;
+  a.logo-icon {
     svg {
-      width: 4rem;
+      width: 3rem;
       height: 3rem;
     }
+    margin-right: 0.5rem;
   }
+}
+
+.bmo-logo-font {
+  font-size: 24px;
+  vertical-align: middle;
+  font-weight: 800;
+  font-family: "Times New Roman", Times, serif;
+  color: #0078c1;
 }

@@ -1,19 +1,36 @@
-import PropTypes from 'prop-types';
-import React from 'react';
+import PropTypes from "prop-types";
+import React, { useEffect, useContext, useState } from "react";
+import { SocketIOContext } from "@components/common/react/client/Socket.io";
+
+// console.log(useSocketIO)
 
 function Price({ regular, special }) {
+  const { socket } = useContext(SocketIOContext);
+  const [price, setPrice] = useState(regular.value);
+
+  console.log(socket);
+
+  useEffect(() => {
+    if (socket) {
+      socket.on("price", ({ goldBar }) => {
+        console.log("gold bar price " + goldBar);
+        setPrice(goldBar);
+      });
+    }
+  }, [socket]);
+
   return (
     <div className="product-price-listing">
       {regular.value === special.value && (
         <div>
-          <span className="sale-price font-semibold">{regular.text}</span>
+          <span className="sale-price font-semibold">${price}</span>
         </div>
       )}
       {special.value < regular.value && (
         <div>
           <span className="sale-price text-critical font-semibold">
             {special.text}
-          </span>{' '}
+          </span>{" "}
           <span className="regular-price font-semibold">{regular.text}</span>
         </div>
       )}
@@ -24,12 +41,12 @@ function Price({ regular, special }) {
 Price.propTypes = {
   regular: PropTypes.shape({
     value: PropTypes.number,
-    text: PropTypes.string
+    text: PropTypes.string,
   }).isRequired,
   special: PropTypes.shape({
     value: PropTypes.number,
-    text: PropTypes.string
-  }).isRequired
+    text: PropTypes.string,
+  }).isRequired,
 };
 
 export { Price };

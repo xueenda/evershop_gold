@@ -23,10 +23,10 @@ CatalogMenuGroup.propTypes = {
   couponGrid: PropTypes.string.isRequired
 };
 
-export const layout = {
-  areaId: 'adminMenu',
-  sortOrder: 50
-};
+// export const layout = {
+//   areaId: 'adminMenu',
+//   sortOrder: 50
+// };
 
 export const query = `
   query Query {

@@ -1,11 +1,11 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import socketIOClient from 'socket.io-client';
+import React, { createContext, useContext, useEffect, useState } from "react";
+import socketIOClient from "socket.io-client";
 
-const SocketIOContext = createContext();
+export const SocketIOContext = createContext();
 
-export const useSocketIO = () => {
-  return useContext(SocketIOContext);
-};
+// export const useSocketIO = () => {
+//   return useContext(SocketIOContext);
+// };
 
 export const SocketIOProvider = ({ url, path, children }) => {
   const [socket, setSocket] = useState(null);
@@ -17,7 +17,7 @@ export const SocketIOProvider = ({ url, path, children }) => {
     return () => {
       socketInstance.disconnect();
     };
-  }, [url]);
+  }, [url, path]);
 
   const value = {
     socket,
