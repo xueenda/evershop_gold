@@ -1,27 +1,29 @@
 import PropTypes from "prop-types";
-import React, { useEffect, useContext, useState } from "react";
-import { SocketIOContext } from "@components/common/react/client/Socket.io";
-
-// console.log(useSocketIO)
+import React, { useEffect } from "react";
+import { useSocketIO } from "@components/common/context/socketIO";
 
 function Price({ regular, special }) {
-  const { socket } = useContext(SocketIOContext);
-  const [price, setPrice] = useState(regular.value);
-
-  console.log(socket);
+  const { subscribe, unsubscribe } = useSocketIO();
+  const [price, setPrice] = React.useState(regular.value);
 
   useEffect(() => {
-    if (socket) {
-      socket.on("price", ({ goldBar }) => {
-        console.log("gold bar price " + goldBar);
-        setPrice(goldBar);
-      });
-    }
-  }, [socket]);
+    const channelName = "goldBar";
+    subscribe(channelName, (price) => {
+      setPrice(price);
+    });
+
+    return () => {
+      unsubscribe(channelName);
+    };
+  }, [subscribe, unsubscribe]);
 
   return (
     <div className="product-price-listing">
-      {regular.value === special.value && (
+      <div>
+        <span className="sale-price font-semibold">${price}</span>
+      </div>
+
+      {/* {regular.value === special.value && (
         <div>
           <span className="sale-price font-semibold">${price}</span>
         </div>
@@ -30,10 +32,10 @@ function Price({ regular, special }) {
         <div>
           <span className="sale-price text-critical font-semibold">
             {special.text}
-          </span>{" "}
+          </span>{' '}
           <span className="regular-price font-semibold">{regular.text}</span>
         </div>
-      )}
+      )} */}
     </div>
   );
 }

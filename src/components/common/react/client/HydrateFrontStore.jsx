@@ -1,11 +1,16 @@
-import React from 'react';
-import { createClient } from 'urql';
-import Hydrate from './Hydrate';
+import React from "react";
+import { createClient } from "urql";
+import Hydrate from "./Hydrate";
+import { SocketIOProvider } from "@components/common/context/socketIO";
 
 const client = createClient({
-  url: '/api/graphql'
+  url: "/api/graphql",
 });
 
 export default function HydrateFrontStore() {
-  return <Hydrate client={client} />;
+  return (
+    <SocketIOProvider>
+      <Hydrate client={client} />
+    </SocketIOProvider>
+  );
 }

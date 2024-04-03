@@ -1,1 +1,1 @@
-docker run -d --mount type=bind,source=$(pwd),target=/app -p 3333:3000 node:18-alpine sleep infinity   
+docker run -d --mount type=bind,source=$(pwd),target=/app -p 3333:3000 -p 3334:3010 node:18-alpine sleep infinity   

@@ -34,17 +34,17 @@ io.on('connection', (socket) => {
     io.emit('price', msg);
   });
 
-  setInterval(()=>{
-    const price =(Math.random() * 101 + 2000).toFixed(2);
-    io.emit('price', { goldBar: price });
-  }, 1000 * 3)
-  
 
   // Disconnect event handler
   socket.on('disconnect', () => {
     console.log('User disconnected');
   });
 });
+
+setInterval(()=>{
+  const price =(Math.random() * 101 + 2000).toFixed(2);
+  io.emit('price', { goldBar: price });
+}, 1000 * 3)
 
 module.exports.start = async function start(cb) {
   const modules = [...getCoreModules(), ...getEnabledExtensions()];

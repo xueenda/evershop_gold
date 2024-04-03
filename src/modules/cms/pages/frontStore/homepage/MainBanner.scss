@@ -35,6 +35,20 @@ $slogan-width: 460px;
       line-height: 6.5rem;
     }
   }
+
+  .slogan-container {
+    width: $slogan-width;
+  }
+  
+  .slogan {
+    position: absolute;
+    bottom: 100px;
+    font-weight: 800;
+    width: $slogan-width;
+    color: white;
+    text-align: center;
+    background-color: rgba($color: #000000, $alpha: .3);
+  }
 }
 
 #app {
@@ -49,16 +63,4 @@ $slogan-width: 460px;
   }
 }
 
-.slogan-container {
-  width: $slogan-width;
-}
 
-.slogan {
-  position: absolute;
-  bottom: 100px;
-  font-weight: 800;
-  width: $slogan-width;
-  color: white;
-  text-align: center;
-  background-color: rgba($color: #000000, $alpha: .3);
-}
