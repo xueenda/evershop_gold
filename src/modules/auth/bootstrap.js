@@ -42,6 +42,6 @@ module.exports = () => {
   };
 
   request.getCurrentUser = function getCurrentUser() {
-    return this.locals.user;
+    return this.locals.user || this.locals.customer;
   };
 };

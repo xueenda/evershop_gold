@@ -1,0 +1,11 @@
+type CustomerShippingMethod {
+  customerId: Int!
+  uuid: String!
+  shippingMethod: String!
+  shippingMethodName: String!
+  createdAt: Date!
+}
+
+extend type Query {
+  customerShippingMethod: CustomerShippingMethod
+}

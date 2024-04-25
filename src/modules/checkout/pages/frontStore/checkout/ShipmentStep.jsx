@@ -15,8 +15,10 @@ export default function ShipmentStep({
     addShippingMethodApi,
     addShippingAddressApi
   },
+  customerAddress,
   setting: { customerAddressSchema }
 }) {
+  shippingAddress = shippingAddress || customerAddress;
   const steps = useCheckoutSteps();
   const [shipmentInfo, setShipmentInfo] = React.useState({
     address: shippingAddress
@@ -110,6 +112,23 @@ export const query = `
       }
       addShippingAddressApi: addAddressApi
       addShippingMethodApi
+    }
+    customerAddress {
+      id: customerAddressId
+      fullName
+      postcode
+      telephone
+      country {
+        code
+        name
+      }
+      province {
+        code
+        name
+      }
+      city
+      address1
+      address2
     }
     setting {
       customerAddressSchema

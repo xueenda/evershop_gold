@@ -30,6 +30,10 @@ export default function Layout({ logoutUrl }) {
         <div className="col-span-1">
           <div className="border-b mb-1 flex justify-between items-center  border-textSubdued">
             <h2>{_('Account Details')}</h2>
+
+            <a className="text-interactive" href="/profile/edit">
+              {_('Edit')}
+            </a>
             <a className="text-interactive" href="#" onClick={(e) => logout(e)}>
               {_('Logout')}
             </a>

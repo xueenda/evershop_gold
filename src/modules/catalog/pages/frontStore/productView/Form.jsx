@@ -94,8 +94,9 @@ function AddToCart({ stockAvaibility, loading = false, error }) {
         />
       </div>
       {error && <div className="text-critical mt-1">{error}</div>}
-      <div className="mt-1">
+      <div className="mt-1 flex gap-1">
         {stockAvaibility === true && (
+          <>
           <Button
             title={_('ADD TO CART')}
             outline
@@ -108,6 +109,21 @@ function AddToCart({ stockAvaibility, loading = false, error }) {
                 );
             }}
           />
+          <Button
+            title={_('BUY NOW')}
+            outline
+            isLoading={loading}
+            variant="buynow"
+            onAction={() => {
+              document
+                .getElementById('productForm')
+                .dispatchEvent(
+                  new Event('submit', { cancelable: true, bubbles: true })
+                );
+            }}
+          />
+          </>
+          
         )}
         {stockAvaibility === false && (
           <Button title={_('SOLD OUT')} onAction={() => {}} />

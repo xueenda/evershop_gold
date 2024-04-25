@@ -1,0 +1,11 @@
+type CustomerPaymentMethod {
+  customerId: Int!
+  uuid: String!
+  paymentMethod: String!
+  paymentMethodName: String!
+  createdAt: Date!
+}
+
+extend type Query {
+  customerPaymentMethod: CustomerPaymentMethod
+}

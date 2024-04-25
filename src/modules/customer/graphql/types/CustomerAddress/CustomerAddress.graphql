@@ -1,0 +1,36 @@
+"""
+Address interface
+"""
+interface Address {
+  fullName: String
+  postcode: String
+  telephone: String
+  country: Country
+  province: Province
+  city: String
+  address1: String
+  address2: String
+}
+
+"""
+Represent a Customer Address
+"""
+type CustomerAddress implements Address {
+  customerAddressId: Int!
+  uuid: String!
+  customerId: Int!
+  fullName: String
+  postcode: String
+  telephone: String
+  country: Country
+  province: Province
+  city: String
+  address1: String
+  address2: String
+}
+
+
+
+extend type Query {
+  customerAddress: CustomerAddress
+}

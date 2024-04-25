@@ -12,7 +12,8 @@
   "scripts": {
     "prepublishOnly": "node prepublish.js",
     "prepack": "node prepublish.js",
-    "dev": "./bin/evershop dev",
+    "dev": "pm2 start pm2.dev.json",
+    "dev2": "./bin/evershop dev",    
     "build": "./bin/evershop build --skip-minify",
     "start": "./bin/evershop start --debug",
     "user:create": "./bin/evershop user:create",

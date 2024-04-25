@@ -15,10 +15,11 @@ const {
 // eslint-disable-next-line no-unused-vars
 module.exports = async (request, response, delegate, next) => {
   const connection = await getConnection();
+  const customer_uuid = request.locals.customer.uuid;
   try {
     const customer = await select()
       .from('customer')
-      .where('uuid', '=', request.params.id)
+      .where('uuid', '=', customer_uuid)
       .load(connection, false);
 
     if (!customer) {
