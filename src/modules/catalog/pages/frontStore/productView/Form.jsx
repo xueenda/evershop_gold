@@ -1,22 +1,22 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable no-param-reassign */
-import PropTypes from 'prop-types';
-import React, { useState } from 'react';
-import { toast } from 'react-toastify';
-import produce from 'immer';
-import Area from '@components/common/Area';
-import { Form } from '@components/common/form/Form';
-import { Field } from '@components/common/form/Field';
-import Button from '@components/common/form/Button';
-import './Form.scss';
-import { useAppDispatch, useAppState } from '@components/common/context/app';
-import { _ } from '@evershop/evershop/src/lib/locale/translate';
+import PropTypes from "prop-types";
+import React, { useState } from "react";
+import { toast } from "react-toastify";
+import produce from "immer";
+import Area from "@components/common/Area";
+import { Form } from "@components/common/form/Form";
+import { Field } from "@components/common/form/Field";
+import Button from "@components/common/form/Button";
+import "./Form.scss";
+import { useAppDispatch, useAppState } from "@components/common/context/app";
+import { _ } from "@evershop/evershop/src/lib/locale/translate";
 
 function ToastMessage({ thumbnail, name, qty, count, cartUrl, toastId }) {
   return (
     <div className="toast-mini-cart">
       <div className="top-head grid grid-cols-2">
-        <div className="self-center">{_('JUST ADDED TO YOUR CART')}</div>
+        <div className="self-center">{_("JUST ADDED TO YOUR CART")}</div>
         <div className="self-center close flex justify-end">
           <a
             href="#"
@@ -50,11 +50,11 @@ function ToastMessage({ thumbnail, name, qty, count, cartUrl, toastId }) {
           <div className="name">
             <span className="font-bold">{name}</span>
           </div>
-          <div>{_('QTY: ${qty}', { qty })}</div>
+          <div>{_("QTY: ${qty}", { qty })}</div>
         </div>
       </div>
       <a className="add-cart-popup-button" href={cartUrl}>
-        {_('VIEW CART (${count})', { count })}
+        {_("VIEW CART (${count})", { count })}
       </a>
       <a
         className="add-cart-popup-continue text-center underline block"
@@ -64,7 +64,7 @@ function ToastMessage({ thumbnail, name, qty, count, cartUrl, toastId }) {
           toast.dismiss(toastId);
         }}
       >
-        {_('Continue Shopping')}
+        {_("Continue Shopping")}
       </a>
     </div>
   );
@@ -76,20 +76,28 @@ ToastMessage.propTypes = {
   name: PropTypes.string.isRequired,
   qty: PropTypes.number.isRequired,
   thumbnail: PropTypes.string.isRequired,
-  toastId: PropTypes.string.isRequired
+  toastId: PropTypes.string.isRequired,
 };
 
-function AddToCart({ stockAvaibility, loading = false, error }) {
+function AddToCart({
+  stockAvaibility,
+  loading = false,
+  error,
+  setAction,
+  addToChart,
+  buyNow,
+}) {
+  const [isBuyNow, setIsBuyNow] = useState(false);
   return (
     <div className="add-to-cart mt-2">
-      <div style={{ width: '8rem' }}>
+      <div style={{ width: "8rem" }}>
         <Field
           type="text"
           value="1"
-          validationRules={['notEmpty']}
+          validationRules={["notEmpty"]}
           className="qty"
           name="qty"
-          placeholder={_('Qty')}
+          placeholder={_("Qty")}
           formId="productForm"
         />
       </div>
@@ -97,36 +105,29 @@ function AddToCart({ stockAvaibility, loading = false, error }) {
       <div className="mt-1 flex gap-1">
         {stockAvaibility === true && (
           <>
-          <Button
-            title={_('ADD TO CART')}
-            outline
-            isLoading={loading}
-            onAction={() => {
-              document
-                .getElementById('productForm')
-                .dispatchEvent(
-                  new Event('submit', { cancelable: true, bubbles: true })
-                );
-            }}
-          />
-          <Button
-            title={_('BUY NOW')}
-            outline
-            isLoading={loading}
-            variant="buynow"
-            onAction={() => {
-              document
-                .getElementById('productForm')
-                .dispatchEvent(
-                  new Event('submit', { cancelable: true, bubbles: true })
-                );
-            }}
-          />
+            <Button
+              title={_("ADD TO CART")}
+              outline
+              isLoading={!isBuyNow && loading}
+              onAction={() => {
+                setIsBuyNow(false);
+                setAction(addToChart);
+              }}
+            />
+            <Button
+              title={_("BUY NOW")}
+              outline
+              isLoading={isBuyNow && loading}
+              variant="buynow"
+              onAction={() => {
+                setIsBuyNow(true);
+                setAction(buyNow);
+              }}
+            />
           </>
-          
         )}
         {stockAvaibility === false && (
-          <Button title={_('SOLD OUT')} onAction={() => {}} />
+          <Button title={_("SOLD OUT")} onAction={() => {}} />
         )}
       </div>
     </div>
@@ -136,22 +137,35 @@ function AddToCart({ stockAvaibility, loading = false, error }) {
 AddToCart.propTypes = {
   error: PropTypes.string,
   loading: PropTypes.bool.isRequired,
-  stockAvaibility: PropTypes.bool.isRequired
+  stockAvaibility: PropTypes.bool.isRequired,
 };
 
 AddToCart.defaultProps = {
-  error: undefined
+  error: undefined,
 };
 
-export default function ProductForm({ product, action }) {
+export default function ProductForm({ product, addToChart, buyNow, checkoutSuccessUrl }) {
   const [loading, setLoading] = useState(false);
   const [toastId, setToastId] = useState();
+  const [action, setAction] = useState();
   const [error, setError] = useState();
   const appContext = useAppState();
   const { setData } = useAppDispatch();
 
+  React.useEffect(() => {
+    action &&
+      document
+        .getElementById("productForm")
+        .dispatchEvent(
+          new Event("submit", { cancelable: true, bubbles: true })
+        );
+  }, [action]);
+
   const onSuccess = (response) => {
     if (!response.error) {
+      if(action === buyNow) {
+        return window.location.href = `${checkoutSuccessUrl}/${response.data.uuid}`
+      }
       setData(
         produce(appContext, (draff) => {
           draff.cart = appContext.cart || {};
@@ -167,7 +181,7 @@ export default function ProductForm({ product, action }) {
             qty={response.data.item.qty}
             count={response.data.count}
             cartUrl="/cart"
-            toastId={`${toastId  }-${  Math.random().toString(36).slice(2)}`}
+            toastId={`${toastId}-${Math.random().toString(36).slice(2)}`}
           />,
           { closeButton: false }
         )
@@ -198,11 +212,14 @@ export default function ProductForm({ product, action }) {
             props: {
               stockAvaibility: product.inventory.isInStock,
               loading,
-              error
+              error,
+              setAction,
+              addToChart,
+              buyNow,
             },
             sortOrder: 50,
-            id: 'productSingleBuyButton'
-          }
+            id: "productSingleBuyButton",
+          },
         ]}
       />
     </Form>
@@ -210,19 +227,21 @@ export default function ProductForm({ product, action }) {
 }
 
 ProductForm.propTypes = {
-  action: PropTypes.string.isRequired,
+  addToChart: PropTypes.string.isRequired,
+  buyNow: PropTypes.string.isRequired,
+  checkoutSuccessUrl: PropTypes.string.isRequired,
   product: PropTypes.shape({
     inventory: PropTypes.shape({
-      isInStock: PropTypes.bool.isRequired
+      isInStock: PropTypes.bool.isRequired,
     }).isRequired,
     name: PropTypes.string.isRequired,
-    sku: PropTypes.string.isRequired
-  }).isRequired
+    sku: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export const layout = {
-  areaId: 'productPageMiddleRight',
-  sortOrder: 20
+  areaId: "productPageMiddleRight",
+  sortOrder: 20,
 };
 
 export const query = `
@@ -238,6 +257,8 @@ export const query = `
         isInStock
       }
     }
-    action:url (routeId: "addMineCartItem")
+    addToChart:url (routeId: "addMineCartItem")
+    buyNow:url (routeId: "buyNow")
+    checkoutSuccessUrl: url(routeId: "checkoutSuccess")
   }
 `;
