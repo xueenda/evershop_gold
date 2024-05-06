@@ -13,7 +13,7 @@ module.exports = {
       if (storeName) {
         return storeName.value;
       } else {
-        return 'EverShop Store';
+        return 'BMO Precious Metals Store';
       }
     }
   }
