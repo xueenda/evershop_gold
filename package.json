@@ -14,8 +14,9 @@
     "prepack": "node prepublish.js",
     "dev": "pm2 start pm2.dev.json",
     "dev2": "./bin/evershop dev",    
-    "build": "./bin/evershop build --skip-minify",
+    "build": "./bin/evershop build",
     "start": "./bin/evershop start --debug",
+    "prod": "pm2 start pm2.prod.json",
     "user:create": "./bin/evershop user:create",
     "user:changePassword": "./bin/evershop user:changePassword",
     "test": "jest"

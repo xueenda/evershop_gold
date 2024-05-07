@@ -1,5 +1,6 @@
 node_modules
 ./dist
+.pnpm-store
 /extensions/*
 themes
 .idea/*
@@ -16,3 +17,5 @@ cypress
 .prettierignore
 .prettierrc
 mysqlToPostgres.js
+.env
+.env.prod

@@ -1,0 +1,8 @@
+{
+    "apps" : [{
+      "name"        : "gold_shop.prod",
+      "script"      : "./bin/dev.js",
+      "watch"       : ["./src/**/*.js", "./src/**/*.json"],
+      "log_date_format"  : "YYYY-MM-DD HH:mm Z"
+    }]
+  }
