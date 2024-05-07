@@ -18,7 +18,14 @@ export default function ShippingMethods({
   const [loading, setLoading] = React.useState(false);
   const [addressProvided, setAddressProvided] = React.useState(false);
   const [methods, setMethods] = React.useState([]);
+  const [selected, setSelected] = React.useState(null);
   const client = useClient();
+
+  React.useEffect(()=>{
+    const selectedMethod = methods.filter((m) => m.selected)[0]
+    if(selectedMethod)
+      setSelected(selectedMethod["code"]);
+  }, [methods])
 
   React.useEffect(() => {
     const timeout = setTimeout(() => {
@@ -65,7 +72,7 @@ export default function ShippingMethods({
                 } else {
                   return {
                     ...m,
-                    selected: m.code === customerShippingMethod.shippingMethod,
+                    selected: customerShippingMethod ? m.code === customerShippingMethod.shippingMethod : false,
                   };
                 }
               });
@@ -157,7 +164,7 @@ export default function ShippingMethods({
             type="radio"
             name="method"
             validationRules={["notEmpty"]}
-            value={methods.filter((m) => m.selected)[0]["code"]}
+            value={selected}
             options={methods.map((m) => ({
               value: m.code,
               text: `${m.name} - $${m.cost}`,

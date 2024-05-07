@@ -52,6 +52,7 @@ module.exports = async (request, response, delegate, next) => {
             }
           });
         } else {
+          console.log("response", response.locals)
           render(request, response);
         }
       }
