@@ -22,6 +22,7 @@ export default function PaymentDetails({
   setting,
   customerPaymentMethod,
 }) {
+  const [loading, setLoading] = React.useState(false);
   const [paymentMethods, setPaymentMethods] = useState();
 
   useEffect(() => {
@@ -30,7 +31,9 @@ export default function PaymentDetails({
         setPaymentMethods(
           response.data.data.methods.map((m) => ({
             ...m,
-            selected: customerPaymentMethod? m.code === customerPaymentMethod.paymentMethod : false,
+            selected: customerPaymentMethod
+              ? m.code === customerPaymentMethod.paymentMethod
+              : false,
           }))
         );
       } else {
@@ -56,6 +59,10 @@ export default function PaymentDetails({
         onValidationError={() => setLoading(false)}
         id="checkoutPaymentForm"
         submitBtn={false}
+        // btnText={_("Save")}
+        onSuccess={(response) => {
+          setLoading(false)
+        }}
         isJSON
       >
         <h4 className="mb-1 mt-3">{_("Payment Method")}</h4>
@@ -114,6 +121,7 @@ export default function PaymentDetails({
         )}
         <div className="form-submit-button">
           <Button
+            isLoading={loading}
             onAction={() => {
               setLoading(true);
               document
